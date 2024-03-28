@@ -33,6 +33,10 @@ app.get("/menu", async (req, res) => {
   res.send(await menuCollection.find().toArray());
 });
 
+app.get("/reviews", async (req, res) => {
+  res.send(await reviewCollection.find().toArray());
+});
+
 app.listen(port, () => {
   console.log(`Bistro Boss server listening on port ${port}`);
 });

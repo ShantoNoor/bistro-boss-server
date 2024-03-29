@@ -22,12 +22,25 @@ const client = new MongoClient(uri, {
 });
 
 const database = client.db("BistroBossDB");
+const userCollection = database.collection("users");
 const menuCollection = database.collection("Menu");
 const reviewCollection = database.collection("reviews");
 const cartCollection = database.collection("carts");
 
 app.get("/", async (req, res) => {
   res.send("Bistro Boss server is Running");
+});
+
+//user related
+app.post('/users', async (req, res) => {
+  const user = req.body;
+  const query = { email: user.email }
+  const existingUser = await userCollection.findOne(query);
+  if (existingUser) {
+    return res.send({ message: 'User already exists', insertedId: null })
+  }
+
+  res.send(await userCollection.insertOne(user));
 });
 
 //menu related

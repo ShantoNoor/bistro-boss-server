@@ -24,17 +24,25 @@ const client = new MongoClient(uri, {
 const database = client.db("BistroBossDB");
 const menuCollection = database.collection("Menu");
 const reviewCollection = database.collection("reviews");
+const cartCollection = database.collection("carts");
 
 app.get("/", async (req, res) => {
   res.send("Bistro Boss server is Running");
 });
 
+//menu related
 app.get("/menu", async (req, res) => {
   res.send(await menuCollection.find().toArray());
 });
 
+//reviews related
 app.get("/reviews", async (req, res) => {
   res.send(await reviewCollection.find().toArray());
+});
+
+//carts related
+app.post("/carts", async (req, res) => {
+  res.send(await cartCollection.insertOne(req.body));
 });
 
 app.listen(port, () => {

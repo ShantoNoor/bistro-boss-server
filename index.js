@@ -41,6 +41,10 @@ app.get("/reviews", async (req, res) => {
 });
 
 //carts related
+app.get("/carts", async (req, res) => {
+  res.send(await cartCollection.find(req.query).toArray());
+});
+
 app.post("/carts", async (req, res) => {
   res.send(await cartCollection.insertOne(req.body));
 });

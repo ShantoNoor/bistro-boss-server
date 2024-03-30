@@ -125,7 +125,7 @@ app.get("/menu", async (req, res) => {
 });
 
 app.get("/menu/:id", async (req, res) => {
-  const query = { _id:  new ObjectId(req.params.id) };
+  const query = { _id: new ObjectId(req.params.id) };
   const result = await menuCollection.findOne(query);
   res.send(result);
 });
@@ -137,7 +137,7 @@ app.post("/menu", verifyToken, verifyAdmin, async (req, res) => {
 app.patch("/menu/:id", async (req, res) => {
   const item = req.body;
   const id = req.params.id;
-  const filter = { _id:  new ObjectId(id) };
+  const filter = { _id: new ObjectId(id) };
   const updatedDoc = {
     $set: {
       ...item,
@@ -149,7 +149,7 @@ app.patch("/menu/:id", async (req, res) => {
 });
 
 app.delete("/menu/:id", verifyToken, verifyAdmin, async (req, res) => {
-  const query = { _id:  new ObjectId(req.params.id) };
+  const query = { _id: new ObjectId(req.params.id) };
   const result = await menuCollection.deleteOne(query);
   res.send(result);
 });
@@ -166,6 +166,13 @@ app.get("/carts", async (req, res) => {
 
 app.post("/carts", async (req, res) => {
   res.send(await cartCollection.insertOne(req.body));
+});
+
+app.delete("/carts/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await cartCollection.deleteOne(query);
+  res.send(result);
 });
 
 app.listen(port, () => {

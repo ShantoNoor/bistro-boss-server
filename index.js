@@ -124,6 +124,10 @@ app.get("/menu", async (req, res) => {
   res.send(await menuCollection.find().toArray());
 });
 
+app.post('/menu', verifyToken, verifyAdmin, async (req, res) => {
+  res.send(await menuCollection.insertOne(req.body));
+});
+
 //reviews related
 app.get("/reviews", async (req, res) => {
   res.send(await reviewCollection.find().toArray());
